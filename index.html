@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Fitting Element Recognition</title>
+</head>
+<body>
+    <h1>Track Fitting Element Recognition</h1>
+    <form id="image-form" enctype="multipart/form-data">
+        <input type="file" name="image" id="image" accept="image/*" required>
+        <button type="submit">Upload and Recognize</button>
+    </form>
+    <h2>Recognition Output:</h2>
+    <div id="result">
+        <!-- Result will be shown here -->
+    </div>
+
+    <script>
+        const form = document.getElementById("image-form");
+        const resultDiv = document.getElementById("result");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            
+            const formData = new FormData();
+            formData.append("image", document.getElementById("image").files[0]);
+
+            const response = await fetch("http://localhost:5000/verify", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                resultDiv.innerHTML = `<p>Component: ${data.component}</p><p>Confidence: ${data.confidence.toFixed(2)}</p>`;
+            } else {
+                resultDiv.innerHTML = `<p>Error: ${data.error}</p>`;
+            }
+        });
+    </script>
+</body>
+</html>
