@@ -13,16 +13,18 @@ from firebase_admin import credentials, firestore
 
 # ================== CONFIG ==================
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 PT_MODEL_PATH = os.getenv(
     "PT_MODEL_PATH",
-    r"D:/7th Sem @vvce/SIH2025/Software/vimarsha/offline_yolo_web/best.pt",
+    os.path.join(BASE_DIR, "best.pt"),
 )
 
 CONF_THRESHOLD = float(os.getenv("CONF_THRESHOLD", "0.35"))
 
 FIREBASE_KEY_PATH = os.getenv(
     "FIREBASE_KEY_PATH",
-    r"D:/7th Sem @vvce/SIH2025/Software/vimarsha/offline_yolo_web/serviceAccountKey.json",
+    r"serviceAccountKey.json",
 )
 
 # Firestore collection to store verification JSON
